@@ -1,0 +1,204 @@
+/* 配件區 */
+#decoration {
+  /* 左邊的配件區和中間的 canvas 編輯區一樣高 */
+  height: 600px;
+  /* 配件區、canvas、總計的背景都是深灰色，看起來是一體的 */
+  background: #666;
+  /* 左上和左下方是圓角 */
+  border-radius: 5px 0 0 5px;
+}
+#decoration div.panel-collapse.collapse.in {
+  /* 左邊的配件區和中間的 canvas 編輯區一樣高 */
+  /* 這是總高度 600px 減掉 panel-heading 高度 39，margin 5 和頂端標題列 40px，
+  再減掉 10px以留一點底下和 border 的距離後，顯示中 panel 的高度*/
+  height: 380px;
+}
+/* 配件區上方的標題「配件」 */
+#decoration-title {
+  /* 原來的 div 區塊，文字「配件」太靠近上下邊線，改成和下方的摺疊標題一樣的 padding，視覺上一致。*/
+  padding: 10px 15px;
+  /* 灰色的背景配白色的字 */
+  background: #666;
+  color: white;
+}
+/* 配件區中的配件圖示 */
+#decoration img {
+  /* 依照之前選擇 T-shirt 顏色的經驗，會晃動是因為沒有 hover 和 hover 時的
+  border, padding, margin 寬度不一樣，所以只要設定一樣就可以了 */
+  border: 2px solid transparent; /* 只是要 border 寬度一樣，所以顏色是透明 */
+}
+/* 滑鼠移到配件上面時(hover)，顯示藍色方框，表示將選取的配件是哪一個 */
+#decoration img:hover {
+  border: 2px solid #428bca;
+  border-radius: 5px; /* 預設是尖尖的四方形，加上圓角，看起來比較柔和 */
+  cursor: pointer; /* 滑鼠游標改成和移到連結時一樣，暗示要點選圖片而不是拖拉 */
+}
+/* 中間 canvas */
+#result {
+  /* 配件區、canvas、總計的背景都是深灰色，看起來是一體的 */
+  background: #666;
+  padding: 20px 15px 25px;
+}
+/* 右邊加入文字、圖片和總價區 */
+#rightContainer {
+  border-radius: 0 5px 5px 0;
+  /* 配件區、canvas、總計的背景都是深灰色，看起來是一體的 */
+  background: #666;
+  color: #fff; /* 總價金額白色字 */
+  height: 600px; /* 和中間的 canvas 一樣都是 600px，看起來一致 */
+}
+/* 右邊的按鈕加入文字、加入圖片
+   調整 margin 使得兩個按鈕是一組的，和下方的明細有所區隔 */
+#showAddTextModalBtn {
+  margin: 15px 0 5px;
+}
+#showAddPicModalBtn {
+  margin: 5px 0 15px;
+}
+/* 按鈕「清空」 */
+#showResetConfirmModal {
+  margin: 5px 0 15px;
+}
+/*
+點選按鈕「使用陰影」時才顯示「陰影方向」和「陰影顏色」選項
+所以顯示「加入文字」 modal 時先不顯示這兩個選項
+*/
+#textShadowPositionOption, #textShadowColorOption {
+  display: none;
+}
+/* 「加入圖片」 modal 的剪裁圖片設定 */
+.action {
+  width: 400px;
+  height: 30px;
+  margin: 10px 0;
+}
+
+.cropped > img {
+  margin-right: 10px;
+}
+
+/* 以下是自己加的 */
+/* 「加入圖片」 modal 寬度原來是 600px，太大了，改成 400px */
+#addPicModal > .modal-dialog {
+  width: 400px;
+}
+/* 並且內容置中 */
+#addPicModal .modal-body {
+  width: 350px;
+  margin: 0 auto;
+}
+/*
+顯示圖片區塊原來是 400 x 400 太大了，縮成 300 x 300
+*/
+.imageBox {
+  width: 300px;
+  height: 300px;
+}
+/*
+選擇檔案和放大縮小功能區塊
+要和上面的顯示圖片區塊一樣寬，看起來才會是一體的
+注意，要先把按鈕 Crop 移到下一行，才能縮小寬度到 300px
+*/
+.action {
+  width: 300px;
+}
+/*
+css/cropbox.css 設定 .imageBox .thumbBox 是白色方形的裁剪區塊，
+加上 border-radius: 50% 就會變成圓形
+*/
+.imageBox .thumbBox {
+  border-radius: 50%;
+}
+
+/* 這三個原來是放在 HTML 中的 inline CSS 設定，為了一致性而移到這裡 */
+#addPicModal .spinner {
+  display: none;
+}
+#file {
+  float:left;
+  width: 250px;
+}
+#btnZoomIn, #btnZoomOut {
+  float: right;
+}
+/***************上方選擇 t-shirt 款式的區塊************/
+/* 產生選擇 T-shirt 顏色的色票 #TShirtColor */
+/* 產生選擇 T-shirt 尺寸的方塊 #TShirtSize */
+#TShirtColor li,
+#TShirtSize li {
+  list-style-type: none; /* 拿掉 ul 左邊的圓點 */
+  display: inline-block; /* 改成由左而右排列，色票之間要有距離，所以用 inline-block，不是用 inline */
+  width: 36px;
+  height: 36px;
+  border: 2px solid #ccc; /* 原來設定 1px，結果滑鼠移過去寬度變成 2px，造成畫面晃動 */
+  /* background-color 是指 border 以內的背景顏色，所以外框 <li> 的 背景是透明 */
+  background: transparent;
+  cursor: pointer; /* 超連結的滑鼠游標樣式 */
+}
+#TShirtColor li > span {
+  /* 設為 block，寬、高才能自由設定，而不是只能依照內容而定 */
+  display: block;
+  /*
+  width = content + padding + border，外面的 <li> width 36px，所以它的 content 也就是包在裡面的 <span> 最大寬度為 36px，再減掉左右兩邊的 border 2px * 2 = 32px，為了露出 <li> 的白色背景，所以 margin 2px，則 span 的 width = 32 - 2 * margin 寬度 = 28px
+  */
+  width: 28px;
+  height: 28px;
+  border: 0;
+  margin: 2px;
+}
+/* ul 預設左邊有 padding 40px，造成沒有貼齊 canvas */
+#TShirtColor > ul,
+#TShirtSize > ul {
+  padding-left: 0;
+}
+/* 點選 T-shirt 顏色或尺寸後，色票或尺寸方塊會有藍色邊框 */
+#TShirtColor li.active,
+#TShirtSize li.active {
+  border: 2px solid #428bca;
+}
+/* 滑鼠移到 T-shirt 色票或和尺寸方塊上，會有藍色邊框 */
+#TShirtColor li:hover,
+#TShirtSize li:hover {
+  border: 2px solid #428bca;
+}
+/* T-shirt 尺寸的文字統一置中對齊 */
+#TShirtSize li {
+  /* 水平方向 */
+  text-align: center;
+  /* 垂直方向用 vertical-align: middle; 沒有反應，所以用 padding 調整 */
+  padding: 5px 0;
+}
+/* 隱藏所有範本程式碼，這些都是用 clone() 複製後修改其值，再顯示 */
+.templates {
+  display: none;
+}
+/* 購物車 */
+#shoppingCartList {
+  border-top: 3px solid #ccc;
+  /* 最下方 2px border，加上最底下一列的 border-bottom: 1px，就是 3px */
+  border-bottom: 2px solid #ccc;
+}
+/* 購物車的每一列 */
+div.shoppingCart.listItem {
+  border-bottom: 1px solid #ccc;
+  /* 原來每一列的寬度大於父元素 #shoppingCartList，使得設定 border 很麻煩，設定 margin: 0 就一樣了 */
+  margin: 0;
+}
+/* 奇數列有灰色背景 */
+#shoppingCartList div.shoppingCart.listItem:nth-child(odd) {
+  background: #eee;
+}
+/* 設定每一列包含的文字、輸入框和按鈕垂直置中 */
+div.shoppingCart.listItem div.form-group {
+  /*min-height: 35px;*/
+  margin: 18px 0;
+}
+/* 設定購物車縮圖垂直置中。圖片和文字、按鈕等高度不同，要另外設定
+   class 如果加上 thumbnail，會有灰色邊框和 margin 20px，所以改用 thumb */
+div.shoppingCart.listItem div.thumb {
+  margin: 3px 0;
+}
+/* 購物車每一列的數量輸入框寬度縮短為原來的一半 */
+div.shoppingCart.listItem input.t-shirt.count {
+  width: 50%;
+}

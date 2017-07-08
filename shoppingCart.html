@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>結帳購物車</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- 購物車 lightbox 特效 -->
+  <link rel="stylesheet" href="css/magnific-popup.css">
+  <link rel="stylesheet" href="css/designTShirt.css">
+  <!-- HTML5 shim and Respond.js 讓 IE8 支援 HTML5 元素與媒體查詢 -->
+  <!-- 警告：Respond.js 無法在 file:// 協定下運作 -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <!-- 確認刪除 modal -->
+  <div class="modal fade" id="shoppingCartModalRemove" tabindex="-1" role="dialog" aria-labelledby="shoppingCartModalRemoveLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="shoppingCartModalRemoveLabel">確認刪除</h4>
+        </div>
+        <div class="modal-body">
+          <p>你確定要刪除這個款式？</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-danger remove">刪除</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="templates">
+    <!-- 結帳購物車的一列，因為 jQuery 無法選取 <tr>, <td>，所以用 bootstrap 格線系統產生表格」  -->
+    <!-- 在表單中放置純文字，需要在 <p> 元素加入 .form-control-static 類別，才能讓左右對齊 -->
+    <div class="row template shoppingCart listItem">
+      <div class="col-md-1 thumb">
+        <a href="#" class="t-shirt lightbox">
+          <img src="" class="t-shirt img-thumbnail">
+        </a>
+      </div>
+      <div class="col-md-1 form-group">
+        <p class="form-control-static">尺寸 <span class="t-shirt size">A</span></p>
+      </div>
+      <div class="col-md-3 form-group">
+        <p class="form-control-static">單價 <span class="t-shirt price">0</span> 元 X </p>
+        <!-- 用 <input type="number"> 的話，會有滑鼠可點選的圖示，用來調整數值，而它可以輸入小於零的值 -->
+        <input type="text" value="1" class="form-control t-shirt count">
+        <p class="form-control-static">件</p>
+      </div>
+      <div class="col-md-2 form-group">
+        <p class="form-control-static">共 <span class="t-shirt sum">0</span> 元</p>
+      </div>
+      <div class="col-md-2 form-group">
+        <button type="button" class="btn btn-primary t-shirt update-count" data-toggle="button" aria-pressed="false" autocomplete="off">修改數量</button>
+        <button type="button" class="btn btn-danger t-shirt remove" data-toggle="button" aria-pressed="false" autocomplete="off">刪除</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>結帳購物車</h1>
+    <form id="shoppingCartList" class="form-inline" role="form">
+    </form>
+    <h3>總計 <span class="t-shirt total">0</span> 元</h3>
+    <p>
+      <a href="designTShirt.html">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> 繼續設計
+      </a>
+    </p>
+  </div>
+  <script src="js/jquery-1.12.4.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <!-- 購物車 lightbox 特效 -->
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/shoppingCart.js"></script>
+</body>
+</html>

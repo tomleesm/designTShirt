@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>設計T-Shirt</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- 「加入圖片」modal 中的剪裁圖片功能基礎 CSS-->
+  <link rel="stylesheet" href="css/cropbox.css" type="text/css">
+  <link rel="stylesheet" href="css/designTShirt.css">
+  <!-- HTML5 shim and Respond.js 讓 IE8 支援 HTML5 元素與媒體查詢 -->
+  <!-- 警告：Respond.js 無法在 file:// 協定下運作 -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+
+  <!-- 點選按鈕「加入文字」時顯示的互動視窗 modal-->
+  <div class="modal fade" id="addTextModal" tabindex="-1" role="dialog" aria-labelledby="addTextModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="addTextModalLabel">加入文字</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <div class="col-md-12">
+                <textarea id="textContent" class="form-control" rows="3" placeholder="請輸入文字"></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="fontFamily" class="col-md-2 control-label">字型</label>
+              <div class="col-md-10">
+                <select id="fontFamily" class="form-control">
+                  <option value="Comic Sans MS">Comic Sans MS</option>
+                  <option value="標楷體">標楷體</option>
+                  <option value="細明體">細明體</option>
+                  <option value="微軟正黑體">微軟正黑體</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="fontSize" class="col-md-2 control-label">大小</label>
+              <div class="col-md-10">
+                <select id="fontSize" class="form-control">
+                  <option value="40">40</option>
+                  <option value="72">72</option>
+                  <option value="100">100</option>
+                  <option value="150">150</option>
+                  <option value="200">200</option>
+                  <option value="300">300</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="fontWeight" class="col-md-2 control-label">粗細</label>
+              <div class="col-md-10 btn-group" data-toggle="buttons">
+                <label class="btn btn-default active">
+                  <input type="radio" class="fontWeight" value="normal" autocomplete="off">一般
+                </label>
+                <label class="btn btn-default">
+                  <input type="radio" class="fontWeight" value="bold" autocomplete="off">粗
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="textFill" class="col-md-2 control-label">顏色</label>
+              <div class="col-md-10">
+                <select id="textFill" class="form-control">
+                  <option value="#000000">黑</option>
+                  <option value="#ff0000">紅</option>
+                  <option value="#00ff00">綠</option>
+                  <option value="#0000ff">藍</option>
+                  <option value="#ffff00">黃</option>
+                  <option value="#ffffff">白</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="fontAlign" class="col-md-2 control-label">對齊</label>
+              <div class="col-md-10 btn-group" data-toggle="buttons">
+                <label class="btn btn-default active">
+                  <input type="radio" class="textAlign" value="left" autocomplete="off">左邊
+                </label>
+                <label class="btn btn-default">
+                  <input type="radio" class="textAlign" value="center" autocomplete="off">中間
+                </label>
+                <label class="btn btn-default">
+                  <input type="radio" class="textAlign" value="right" autocomplete="off">右邊
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="shadowEnable" class="col-md-2 control-label">陰影</label>
+              <div class="col-md-10">
+                <button type="button" id="shadowEnable" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off">
+                  使用陰影
+                </button>
+              </div>
+            </div>
+            <!-- 點選按鈕「使用陰影」時才顯示「陰影方向」和「陰影顏色」選項 -->
+            <div id="textShadowPositionOption" class="form-group">
+              <label for="textShadowPosition" class="col-md-2 control-label">陰影方向</label>
+              <div class="col-md-10 btn-group" data-toggle="buttons">
+                <label class="btn btn-default active">
+                  <input type="radio" class="textShadowPosition" value="1" autocomplete="off">右下
+                </label>
+                <label class="btn btn-default">
+                  <input type="radio" class="textShadowPosition" value="2" autocomplete="off">左上
+                </label>
+                <label class="btn btn-default">
+                  <input type="radio" class="textShadowPosition" value="3" autocomplete="off">四周
+                </label>
+              </div>
+            </div>
+            <div id="textShadowColorOption" class="form-group">
+              <label for="textShadowColor" class="col-md-2 control-label">陰影顏色</label>
+              <div class="col-md-10">
+                <select id="textShadowColor" class="form-control">
+                  <option value="#000000">黑</option>
+                  <option value="#ff0000">紅</option>
+                  <option value="#00ff00">綠</option>
+                  <option value="#0000ff">藍</option>
+                  <option value="#ffff00">黃</option>
+                  <option value="#ffffff">白</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="addTextCancelBtn" class="btn btn-default" data-dismiss="modal">取消</button>
+          <!-- 一開始產生 modal 時，按鈕「加入文字」就是禁用狀態，「請輸入文字」中有輸入文字時，才會解除禁用 -->
+          <button type="button" id="addTextBtn" class="btn btn-primary" disabled>加入文字</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 點選按鈕「加入圖片」時顯示的互動視窗 modal-->
+  <div class="modal fade" id="addPicModal" tabindex="-1" role="dialog" aria-labelledby="addPicModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="addPicModalLabel">加入圖片</h4>
+        </div>
+        <div class="modal-body">
+          <div class="imageBox">
+            <div class="thumbBox"></div>
+            <div class="spinner">Loading...</div>
+          </div>
+          <div class="action">
+            <input type="file" id="file">
+            <input type="button" id="btnZoomIn" value="+">
+            <input type="button" id="btnZoomOut" value="-">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" id="addPicBtn" class="btn btn-primary">加入圖片</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 點選按鈕「清空」時顯示的互動視窗 modal-->
+  <div class="modal fade" id="resetConfirmModal" tabindex="-1" role="dialog" aria-labelledby="resetConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="resetConfirmModalLabel">確認清空</h4>
+        </div>
+        <div class="modal-body">
+          你確定要刪除加入的所有配件、文字和上傳的圖片？
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" id="reset" class="btn btn-primary">確定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 需要有 container 才能使用格線系統 -->
+  <div class="container">
+    <!-- 上方選擇 t-shirt 款式的區塊 -->
+    <div id="TShirtStyle" class="row">
+      <div id="TShirtOption" class="col-md-3">
+      </div>
+      <!-- t-shirt 顏色 -->
+      <div id="TShirtColor" class="col-md-4">
+        <ul>
+          <span>T-shirt 顏色</span>
+          <!-- <li> 白色背景、灰色框，<span> 則是裡面的色票 -->
+          <!-- 使用者即使忘記選擇，也有預設值白色 -->
+          <li class="active"><span style="background:#fff"> </span></li>
+          <li><span style="background:#ccc"> </span> </li>
+          <li><span style="background:#000"> </span></li>
+          <li><span style="background:#8f2941"> </span></li>
+          <li><span style="background:#d7504a"> </span></li>
+          <li><span style="background:#6d8175"> </span></li>
+          <li><span style="background:#2d4a76"> </span></li>
+        </ul>
+      </div>
+      <!-- t-shirt 尺寸 -->
+      <div id="TShirtSize" class="col-md-4">
+        <ul>
+          <span>T-shirt 尺寸</span>
+          <li>XS</li>
+          <li>S</li>
+          <li class="active">M</li><!-- 使用者即使忘記選擇，也有預設值 M -->
+          <li>L</li>
+          <li>XL</li>
+        </ul>
+      </div>
+    </div>
+    <!-- 下方顯示 T-shirt 編輯區的區塊 -->
+    <div id="t-shirt-editor" class="row">
+      <!-- 配件區 3 格 -->
+      <div class="panel-group col-md-3" id="decoration" role="tablist" aria-multiselectable="true">
+        <div id="decoration-title">配件區</div>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#decoration" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                35 元
+              </a>
+            </h4>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+              <img src="img/decorations/35_1.png">
+              <img src="img/decorations/35_2.png">
+              <img src="img/decorations/35_3.png">
+              <img src="img/decorations/35_4.png">
+              <img src="img/decorations/35_5.png">
+              <img src="img/decorations/35_6.png">
+              <img src="img/decorations/35_7.png">
+              <img src="img/decorations/35_8.png">
+              <img src="img/decorations/35_9.png">
+              <img src="img/decorations/35_10.png">
+              <img src="img/decorations/35_11.png">
+              <img src="img/decorations/35_12.png">
+              <img src="img/decorations/35_13.png">
+              <img src="img/decorations/35_14.png">
+              <img src="img/decorations/35_15.png">
+              <img src="img/decorations/35_16.png">
+              <img src="img/decorations/35_17.png">
+              <img src="img/decorations/35_18.png">
+              <img src="img/decorations/35_19.png">
+              <img src="img/decorations/35_20.png">
+              <img src="img/decorations/35_21.png">
+              <img src="img/decorations/35_22.png">
+              <img src="img/decorations/35_23.png">
+              <img src="img/decorations/35_24.png">
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingTwo">
+            <h4 class="panel-title">
+              <a class="collapsed" data-toggle="collapse" data-parent="#decoration" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                45 元
+              </a>
+            </h4>
+          </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="panel-body">
+              <img src="img/decorations/45_1.png">
+              <img src="img/decorations/45_2.png">
+              <img src="img/decorations/45_3.png">
+              <img src="img/decorations/45_4.png">
+              <img src="img/decorations/45_5.png">
+              <img src="img/decorations/45_6.png">
+              <img src="img/decorations/45_7.png">
+              <img src="img/decorations/45_8.png">
+              <img src="img/decorations/45_9.png">
+              <img src="img/decorations/45_10.png">
+              <img src="img/decorations/45_11.png">
+              <img src="img/decorations/45_12.png">
+              <img src="img/decorations/45_13.png">
+              <img src="img/decorations/45_14.png">
+              <img src="img/decorations/45_15.png">
+              <img src="img/decorations/45_16.png">
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingThree">
+            <h4 class="panel-title">
+              <a class="collapsed" data-toggle="collapse" data-parent="#decoration" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                60 元
+              </a>
+            </h4>
+          </div>
+          <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+            <div class="panel-body">
+              <img src="img/decorations/60_1.png">
+              <img src="img/decorations/60_2.png">
+              <img src="img/decorations/60_3.png">
+              <img src="img/decorations/60_4.png">
+              <img src="img/decorations/60_5.png">
+              <img src="img/decorations/60_6.png">
+              <img src="img/decorations/60_7.png">
+              <img src="img/decorations/60_8.png">
+              <img src="img/decorations/60_9.png">
+              <img src="img/decorations/60_10.png">
+              <img src="img/decorations/60_11.png">
+              <img src="img/decorations/60_12.png">
+              <img src="img/decorations/60_13.png">
+              <img src="img/decorations/60_14.png">
+              <img src="img/decorations/60_15.png">
+              <img src="img/decorations/60_16.png">
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingFour">
+            <h4 class="panel-title">
+              <a class="collapsed" data-toggle="collapse" data-parent="#decoration" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                80 元
+              </a>
+            </h4>
+          </div>
+          <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+            <div class="panel-body">
+              <img src="img/decorations/80_1.png">
+              <img src="img/decorations/80_2.png">
+              <img src="img/decorations/80_3.png">
+              <img src="img/decorations/80_4.png">
+              <img src="img/decorations/80_5.png">
+              <img src="img/decorations/80_6.png">
+              <img src="img/decorations/80_7.png">
+              <img src="img/decorations/80_8.png">
+              <img src="img/decorations/80_9.png">
+              <img src="img/decorations/80_10.png">
+              <img src="img/decorations/80_11.png">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- canvas 6 格-->
+      <div id="result" class="col-md-6">
+        <canvas id="canvas"></canvas>
+      </div>
+      <!-- T-shirt 右邊總價區 2 格-->
+      <div id="rightContainer" class="col-md-2">
+        <button type="button" id="showAddTextModalBtn" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addTextModal">T 加入文字</button>
+        <button type="button" id="showAddPicModalBtn" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addPicModal">
+          <span class="glyphicon glyphicon-picture" aria-hidden="true"></span> 加入圖片
+        </button>
+        <button type="button" id="remove" class="btn btn-danger btn-block">
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 刪除
+        </button>
+        <button type="button" id="showResetConfirmModal" class="btn btn-danger btn-block" data-toggle="modal" data-target="#resetConfirmModal">
+          <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> 清空
+        </button>
+        <div id="TShirtPrice">
+          <p><span id="chineseColorName">白</span>色短袖 <span class="t-shirt size">M</span> 號 T-Shirt <br><span class="TShirt">250</span> 元</p>
+          <p>35 元配件：35 X <span class="count">0</span> = <span class="sum">0</span></p>
+          <p>45 元配件：45 X <span class="count">0</span> = <span class="sum">0</span></p>
+          <p>60 元配件：60 X <span class="count">0</span> = <span class="sum">0</span></p>
+          <p>80 元配件：80 X <span class="count">0</span> = <span class="sum">0</span></p>
+          <p>總價 <span class="totalPrice">0</span> 元
+          </div>
+        </div>
+      </div>
+
+      <div id="footer" class="row">
+        <div class="col-md-4 col-md-push-8">
+          <!-- 要有 href，連結才會有底線和藍色字，否則是黑色字，看起來不像連結 -->
+          <!-- 要有屬性 download ，點選後才會下載檔案，不然會直接在瀏覽器顯示 -->
+          <!-- 屬性 download 的預設檔名是「下載.png」，所以最好是指定檔名 -->
+          <a href="#" id="downloadPic" download="t-shirt.png">
+            <span class="glyphicon glyphicon-camera" aria-hidden="true"></span> 存成圖檔
+          </a>
+          <a href="#" id="addToShoppingCart">
+            <span class="glyphicon glyphicon-shopping-cart"   aria-hidden="true"></span> 加入購物車
+          </a>
+          <a href="shoppingCart.html" id="showShoppingCart">
+            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+            結帳，共 <span class="count">0</span> 種款式
+          </a>
+      </div>
+    </div>
+  </div>
+  <!-- cropbox.js 不支援 jQuery 3 -->
+  <script src="js/jquery-1.12.4.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/fabric.min.js"></script>
+  <script src="js/cropbox.min.js"></script>
+  <script src="js/designTShirt.js"></script>
+</body>
+</html>
