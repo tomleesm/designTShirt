@@ -2,6 +2,8 @@
 
 在網站上設計自己的 T-shirt，可以加上配件、文字和圖片。T-shirt 設計功能都寫在 `js/designTShirt.js`，購物車功能寫在 `js/shoppingCart.js`，兩個頁面共用 `css/designTShirt.css`。資料都儲存在 localStorage，沒有使用資料庫。
 
+Demo https://tomleesm.github.io/designTShirt/designTShirt.html
+
 #### 額外使用的 library
 
 * [Fabric.js Javascript Canvas Library](http://fabricjs.com/): 產生 T-shirt 編輯區
